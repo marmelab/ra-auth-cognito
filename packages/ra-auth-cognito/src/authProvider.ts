@@ -107,12 +107,12 @@ export const CognitoAuthProvider = (
         async logout() {
             return new Promise((resolve, reject) => {
                 const user = userPool.getCurrentUser();
-                if (user) {
-                    return user.signOut(() => {
-                        resolve();
-                    });
+                if (!user) {
+                    return resolve();
                 }
-                resolve();
+                user.signOut(() => {
+                    resolve();
+                });
             });
         },
         // called when the API returns an error
