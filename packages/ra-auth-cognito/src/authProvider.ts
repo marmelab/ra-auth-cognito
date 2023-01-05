@@ -62,22 +62,18 @@ export const CognitoAuthProvider = (
         }) {
             return new Promise((resolve, reject) => {
                 if (newPassword) {
-                    if (user) {
-                        user.completeNewPasswordChallenge(
-                            newPassword,
-                            attributes,
-                            {
-                                onSuccess: result => {
-                                    resolve(result);
-                                },
-                                onFailure: err => {
-                                    reject(err);
-                                },
-                            }
-                        );
-                    } else {
-                        reject(new Error('User is not defined'));
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
                     }
+
+                    user.completeNewPasswordChallenge(newPassword, attributes, {
+                        onSuccess: result => {
+                            resolve(result);
+                        },
+                        onFailure: err => {
+                            reject(err);
+                        },
+                    });
                 }
 
                 user = new CognitoUser({
@@ -127,7 +123,7 @@ export const CognitoAuthProvider = (
                 const user = userPool.getCurrentUser();
 
                 if (!user) {
-                    reject();
+                    return reject();
                 }
                 user.getSession((err, session) => {
                     if (err) {
