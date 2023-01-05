@@ -108,12 +108,11 @@ export const CognitoAuthProvider = (
             return new Promise((resolve, reject) => {
                 const user = userPool.getCurrentUser();
                 if (user) {
-                    user.signOut(() => {
+                    return user.signOut(() => {
                         resolve();
                     });
-                } else {
-                    resolve();
                 }
+                resolve();
             });
         },
         // called when the API returns an error
@@ -127,24 +126,25 @@ export const CognitoAuthProvider = (
             return new Promise((resolve, reject) => {
                 const user = userPool.getCurrentUser();
 
-                if (user) {
-                    user.getSession((err, session) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            if (session.isValid()) {
-                                user.getUserAttributes(err => {
-                                    if (err) {
-                                        reject(err);
-                                    }
-                                    resolve();
-                                });
-                            } else {
-                                reject();
-                            }
-                        }
-                    });
+                if (!user) {
+                    reject();
                 }
+                user.getSession((err, session) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    if (!session.isValid()) {
+                        return reject();
+                    }
+
+                    user.getUserAttributes(err => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        resolve();
+                    });
+                });
             });
         },
         // called when the user navigates to a new location, to check for permissions / roles
@@ -152,58 +152,52 @@ export const CognitoAuthProvider = (
             return new Promise((resolve, reject) => {
                 const user = userPool.getCurrentUser();
 
-                if (user) {
-                    user.getSession((err, session: CognitoUserSession) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            if (session.isValid()) {
-                                const token = session
-                                    .getIdToken()
-                                    .decodePayload();
-
-                                resolve(token['cognito:groups']);
-                            } else {
-                                reject();
-                            }
-                        }
-                    });
+                if (!user) {
+                    return reject();
                 }
+
+                user.getSession((err, session: CognitoUserSession) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    if (!session.isValid()) {
+                        return reject();
+                    }
+                    const token = session.getIdToken().decodePayload();
+                    return resolve(token['cognito:groups']);
+                });
             });
         },
         async getIdentity() {
             return new Promise((resolve, reject) => {
                 const user = userPool.getCurrentUser();
 
-                if (user) {
-                    user.getSession((err, session) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            if (session.isValid()) {
-                                user.getUserAttributes((err, attributes) => {
-                                    if (err) {
-                                        reject(err);
-                                    }
-
-                                    resolve({
-                                        id: user.getUsername(),
-                                        fullName: attributes?.find(
-                                            attribute =>
-                                                attribute.Name === 'name'
-                                        )?.Value,
-                                        avatar: attributes?.find(
-                                            attribute =>
-                                                attribute.Name === 'picture'
-                                        )?.Value,
-                                    });
-                                });
-                            } else {
-                                reject();
-                            }
-                        }
-                    });
+                if (!user) {
+                    return reject();
                 }
+                user.getSession((err, session) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    if (!session.isValid()) {
+                        return reject();
+                    }
+                    user.getUserAttributes((err, attributes) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        resolve({
+                            id: user.getUsername(),
+                            fullName: attributes?.find(
+                                attribute => attribute.Name === 'name'
+                            )?.Value,
+                            avatar: attributes?.find(
+                                attribute => attribute.Name === 'picture'
+                            )?.Value,
+                        });
+                    });
+                });
             });
         },
     };
