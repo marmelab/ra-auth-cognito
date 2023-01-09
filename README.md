@@ -37,7 +37,7 @@ We need to add some minimal configuration to our UserPool instance to use it. Th
 
 For the demo app, you need to setup environment variables. You can do this by creating a `.env` file in the root of the project. The following variables are required:
 
-```JS
+```sh
 VITE_COGNITO_USERPOOL_ID="userpool-id"
 VITE_COGNITO_APP_CLIENT_ID="app-client-id"
 ```
@@ -53,6 +53,14 @@ Setup the hosted UI for your user pool with the following options:
 - Ensure the `OpenId`, `Email`, `Profile` and `aws.cognito.signin.user.admin` scopes are selected.
 
 To enable the hosted UI, you must also a domain in the `App integration` section. Select a Cognito domain and copy its url.
+
+Update the env file accordingly:
+
+```sh
+VITE_COGNITO_USERPOOL_ID="userpool-id"
+VITE_COGNITO_APP_CLIENT_ID="app-client-id"
+VITE_COGNITO_HOSTED_UI_URL="YOUR_URL"
+```
 
 ### Using the Simple Demo
 
