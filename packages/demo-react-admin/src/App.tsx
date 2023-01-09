@@ -10,7 +10,6 @@ import posts from './posts';
 import users from './users';
 import tags from './tags';
 import { CognitoAuthProvider, Login } from 'ra-auth-cognito';
-import jsonServerProvider from 'ra-data-json-server';
 import fakeRestProvider from 'ra-data-fakerest';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import data from './data';
@@ -21,16 +20,18 @@ const userPool = new CognitoUserPool({
 });
 
 const authProvider = CognitoAuthProvider(userPool);
+// To test the oauth mode
+// const authProvider = CognitoAuthProvider({
+//   mode: 'oauth';
+//   hostedUIUrl:  'https://react-admin.auth.eu-west-3.amazoncognito.com'
+//   clientId:  import.meta.env.VITE_COGNITO_APP_CLIENT_ID
+// });
 
 const App = () => {
     return (
         <BrowserRouter>
             <Admin
                 authProvider={authProvider}
-                // dataProvider={jsonServerProvider(
-                //     'http://localhost:3000',
-                //     httpClient(userPool)
-                // )}
                 dataProvider={fakeRestProvider(data)}
                 i18nProvider={i18nProvider}
                 title="Example Admin"

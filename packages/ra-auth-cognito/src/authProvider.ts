@@ -47,12 +47,12 @@ import { ErrorRequireNewPassword } from './ErrorRequireNewPassword';
  * @param userPool a CognitoUserPool instance
  * @returns an authProvider ready to be used by React-Admin.
  */
-// https://react-admin.auth.eu-west-3.amazoncognito.com/login?client_id=1v090rrs9pi78u5cci11o9u6bp&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth-callback
 export type CognitoAuthProviderOptionsPool = CognitoUserPool;
 
 export type CognitoAuthProviderOptionsIds = {
     userPoolId: string;
     clientId: string;
+    hostedUIUrl?: string;
     mode: 'oauth' | 'username';
     redirect_uri?: string;
     scope?: string[];
@@ -159,7 +159,9 @@ export const CognitoAuthProvider = (
                             'email',
                             'profile',
                         ];
-                        const url = `https://react-admin.auth.eu-west-3.amazoncognito.com/login?client_id=${
+                        const url = `${
+                            oauthOptions.hostedUIUrl
+                        }/login?client_id=${
                             oauthOptions.clientId
                         }&response_type=token&scope=${scope.join(
                             '+'
