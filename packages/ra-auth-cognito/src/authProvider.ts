@@ -162,6 +162,7 @@ export const CognitoAuthProvider = (
                             'openid',
                             'email',
                             'profile',
+                            'aws.cognito.signin.user.admin',
                         ];
                         const url = `${
                             oauthOptions.hostedUIUrl

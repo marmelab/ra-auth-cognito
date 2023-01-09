@@ -50,7 +50,7 @@ Setup the hosted UI for your user pool with the following options:
 - Allowed callback URLs: `http://localhost:8081/auth-callback`
 - Allowed sign-out URLs: `http://localhost:8081/`
 - Select the `Implicit grant` option.
-- Ensure the `OpenId`, `Email` and `Profile` scopes are selected.
+- Ensure the `OpenId`, `Email`, `Profile` and `aws.cognito.signin.user.admin` scopes are selected.
 
 To enable the hosted UI, you must also a domain in the `App integration` section. Select a Cognito domain and copy its url.
 

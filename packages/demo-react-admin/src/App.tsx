@@ -22,9 +22,11 @@ const userPool = new CognitoUserPool({
 const authProvider = CognitoAuthProvider(userPool);
 // To test the oauth mode
 // const authProvider = CognitoAuthProvider({
-//   mode: 'oauth',
-//   hostedUIUrl:  import.meta.env.VITE_COGNITO_HOSTED_UI_URL,
-//   clientId:  import.meta.env.VITE_COGNITO_APP_CLIENT_ID,
+//     mode: 'oauth',
+//     hostedUIUrl: import.meta.env.VITE_COGNITO_HOSTED_UI_URL,
+//     userPoolId: import.meta.env.VITE_COGNITO_USERPOOL_ID,
+//     clientId: import.meta.env.VITE_COGNITO_APP_CLIENT_ID,
+//     scope: ['openid', 'email', 'profile', 'aws.cognito.signin.user.admin'],
 // });
 
 const App = () => {
