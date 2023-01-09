@@ -94,14 +94,18 @@ export const CognitoAuthProvider = (
                         return reject(new Error('User is not defined'));
                     }
 
-                    user.completeNewPasswordChallenge(newPassword, attributes, {
-                        onSuccess: result => {
-                            resolve(result);
-                        },
-                        onFailure: err => {
-                            reject(err);
-                        },
-                    });
+                    return user.completeNewPasswordChallenge(
+                        newPassword,
+                        attributes,
+                        {
+                            onSuccess: result => {
+                                resolve(result);
+                            },
+                            onFailure: err => {
+                                reject(err);
+                            },
+                        }
+                    );
                 }
 
                 user = new CognitoUser({
