@@ -69,6 +69,7 @@ import posts from './posts';
 const authProvider = CognitoAuthProvider({
     mode: 'oauth',
     clientId: 'COGNITO_APP_CLIENT_ID',
+    userPoolId: 'COGNITO_USERPOOL_ID',
     hostedUIUrl:  'YOUR AWS HOSTED UI URL',
 });
 
