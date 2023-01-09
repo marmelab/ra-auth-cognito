@@ -22,9 +22,9 @@ const userPool = new CognitoUserPool({
 const authProvider = CognitoAuthProvider(userPool);
 // To test the oauth mode
 // const authProvider = CognitoAuthProvider({
-//   mode: 'oauth';
-//   hostedUIUrl:  'https://react-admin.auth.eu-west-3.amazoncognito.com'
-//   clientId:  import.meta.env.VITE_COGNITO_APP_CLIENT_ID
+//   mode: 'oauth',
+//   hostedUIUrl:  'https://react-admin.auth.eu-west-3.amazoncognito.com',
+//   clientId:  import.meta.env.VITE_COGNITO_APP_CLIENT_ID,
 // });
 
 const App = () => {
