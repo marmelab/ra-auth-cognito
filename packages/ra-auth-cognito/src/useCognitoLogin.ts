@@ -25,7 +25,7 @@ export type UseCognitoLoginResult<NewPasswordFormData = unknown> = [
  * @param options The hook options
  * @param options.redirectTo The page to redirect to after a successful login. Default is the admin home page.
  * @returns A tuple containing the login function as its first item and the react-query mutation as the second.
- * This second item is an object containing that has the same properties as the react-query mutation, plus a
+ * This second item is an object that has the same properties as the react-query mutation, plus a
  * requireNewPassword property that is true when the user is required to set a new password because they signed in
  * with a temporary password.
  *

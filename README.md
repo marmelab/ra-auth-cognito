@@ -53,7 +53,7 @@ The first time you sign in with any of the users, you'll have to enter their tem
 -   Signing in with `user` will only grant the `user` role permissions
 -   Signing in with `admin` will grant full `admin` role permissions, allowing for instance to see the 'Users' resource in the main menu
 
-Feel free to play around with this demo, along with the Auth0 config, to understand better how it works!
+Feel free to play around with this demo, along with the Cognito config, to understand better how it works!
 
 ## License
 
