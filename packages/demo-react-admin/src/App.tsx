@@ -23,7 +23,7 @@ const authProvider = CognitoAuthProvider(userPool);
 // To test the oauth mode
 // const authProvider = CognitoAuthProvider({
 //   mode: 'oauth',
-//   hostedUIUrl:  'https://react-admin.auth.eu-west-3.amazoncognito.com',
+//   hostedUIUrl:  import.meta.env.VITE_COGNITO_HOSTED_UI_URL,
 //   clientId:  import.meta.env.VITE_COGNITO_APP_CLIENT_ID,
 // });
 

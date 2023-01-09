@@ -44,6 +44,16 @@ VITE_COGNITO_APP_CLIENT_ID="app-client-id"
 
 1. Run `make install start` to install the dependencies and start the Demo App
 
+## Testing the OAuth mode
+
+Setup the hosted UI for your user pool with the following options:
+- Allowed callback URLs: `http://localhost:8081/auth-callback`
+- Allowed sign-out URLs: `http://localhost:8081/`
+- Select the `Implicit grant` option.
+- Ensure the `OpenId`, `Email` and `Profile` scopes are selected.
+
+To enable the hosted UI, you must also a domain in the `App integration` section. Select a Cognito domain and copy its url.
+
 ### Using the Simple Demo
 
 Now that all is configured and running, you can browse to http://127.0.0.1:8081/ to access the React Admin App.

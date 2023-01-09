@@ -23,7 +23,7 @@ yarn add ra-auth-cognito
 npm install --save ra-auth-cognito
 ```
 
-## Example usage
+## Usage With Username/Password Sign-in
 
 ```jsx
 // in src/App.tsx
@@ -40,6 +40,37 @@ const userPool = new CognitoUserPool({
 });
 
 const authProvider = CognitoAuthProvider(userPool);
+
+const App = () => {
+  return (
+       <Admin
+           authProvider={authProvider}
+           dataProvider={dataProvider}
+           title="Example Admin"
+        >
+            <Resource name="posts" {...posts} />
+      </Admin>
+   );
+};
+export default App;
+```
+
+## Usage With AWS Hosted UI (OAuth)
+
+```jsx
+// in src/App.tsx
+import React from 'react';
+import { Admin, Resource } from 'react-admin';
+import { CognitoAuthProvider } from 'ra-auth-cognito';
+import { CognitoUserPool } from 'amazon-cognito-identity-js';
+import dataProvider from './dataProvider';
+import posts from './posts';
+
+const authProvider = CognitoAuthProvider({
+    mode: 'oauth',
+    clientId: 'COGNITO_APP_CLIENT_ID',
+    hostedUIUrl:  'YOUR AWS HOSTED UI URL',
+});
 
 const App = () => {
   return (
