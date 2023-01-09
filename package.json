@@ -1,7 +1,7 @@
 {
     "name": "ra-auth-cognito-monorepo",
     "private": true,
-    "author": "Marmelab",
+    "author": "Gildas Garcia <gildas@marmelab.com> (https://marmelab.com/)",
     "license": "MIT",
     "devDependencies": {
         "@babel/preset-env": "^7.15.0",
