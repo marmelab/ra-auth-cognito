@@ -26,7 +26,7 @@ We need to add some minimal configuration to our UserPool instance to use it. Th
 
 1. Go to the [AWS Console](https://eu-west-3.console.aws.amazon.com/cognito/v2/idp/user-pools/)
 1. Select your User Pool (or create a new one)
-1. Add an `admin` user.
+1. Add an `admin` user and **set their email**. You may add the `name` and `picture` attribute as well for the react-admin identity feature.
 1. Add an `admin` group and assign the `admin` user.
 1. Do the same for `user` and the `user` role.
 1. Go to the `App integration` section of your User Pool and click the `Create app client` button

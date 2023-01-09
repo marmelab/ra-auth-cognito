@@ -8,6 +8,13 @@ This package provides:
 -   A `useCognitoLogin` hook to allow building a custom `Login` page. It handles initial login with a temporary password
 -   A custom `Login` component that handle initial login with a temporary password
 
+## Supported Cognito Features
+
+- Username/password authentication
+- OAuth authentication with Implicit code grant
+
+In all cases, users must be added to the user pool with their email set before they may sign-in in react-admin.
+
 ## Installation
 
 ```sh
@@ -47,6 +54,10 @@ const App = () => {
 };
 export default App;
 ```
+
+## Handling User Identities
+
+To support react-admin [identity feature](https://marmelab.com/react-admin/AuthProviderWriting.html#getidentity), you may add the `name` and `picture` [attributes](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-attributes.html) to the users registered in your user pool.
 
 ## Handling Permissions
 
