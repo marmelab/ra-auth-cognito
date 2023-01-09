@@ -39,3 +39,6 @@ test-unit: ## launch unit tests
 
 start:
 	@cd ./packages/demo-react-admin && yarn start
+
+publish: ## Publish the package
+	cd packages/ra-auth-cognito && npm publish
