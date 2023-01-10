@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "lib",
+        "rootDir": "src",
+        "declaration": true,
+        "allowJs": false,
+        "jsx": "react",
+        "lib": ["es2017", "dom"],
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "types": ["jest", "node", "vite/client"],
+    },
+    "include": ["src"]
+}
