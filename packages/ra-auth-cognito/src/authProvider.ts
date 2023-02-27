@@ -220,7 +220,7 @@ export const CognitoAuthProvider = (
                         return reject();
                     }
                     const token = session.getIdToken().decodePayload();
-                    return resolve(token['cognito:groups']);
+                    return resolve(token['cognito:groups'] ?? []);
                 });
             });
         },
