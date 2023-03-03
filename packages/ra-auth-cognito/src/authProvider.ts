@@ -173,7 +173,7 @@ export const CognitoAuthProvider = (
                         )}&redirect_uri=${redirect_uri}`;
                         window.location.href = url;
                     } else {
-                        return reject(new HttpError('No user', 401));
+                        return reject(error);
                     }
                 };
                 let user = userPool.getCurrentUser();
@@ -185,7 +185,9 @@ export const CognitoAuthProvider = (
                 }
                 user.getSession((err, session) => {
                     if (err) {
-                        return reject(err);
+                        return redirectToOAuthIfNeeded(
+                            new HttpError('No user', 401)
+                        );
                     }
 
                     if (!session.isValid()) {
