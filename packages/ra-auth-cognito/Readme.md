@@ -79,6 +79,7 @@ const App = () => {
            authProvider={authProvider}
            dataProvider={dataProvider}
            title="Example Admin"
+           loginPage={false} // We don't need the login page in this case
         >
             <Resource name="posts" {...posts} />
       </Admin>
