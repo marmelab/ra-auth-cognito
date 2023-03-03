@@ -185,7 +185,9 @@ export const CognitoAuthProvider = (
                 }
                 user.getSession((err, session) => {
                     if (err) {
-                        return reject(err);
+                        return redirectToOAuthIfNeeded(
+                            new HttpError('No user', 401)
+                        );
                     }
 
                     if (!session.isValid()) {
