@@ -1,6 +1,6 @@
 {
     "name": "ra-auth-cognito",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "repository": "git@github.com:marmelab/ra-auth-cognito.git",
     "author": "Gildas Garcia <gildas@marmelab.com> (https://marmelab.com/)",
     "license": "MIT",
