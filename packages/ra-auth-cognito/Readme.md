@@ -25,11 +25,13 @@ npm install --save ra-auth-cognito
 
 ## Usage With Username/Password Sign-in
 
+When not using the AWS hosted UI, users you create in AWS will receive an email with a temporary password. The first time they log in the application with this temporary password, they will have to enter the password they want to use. To handle this use case, `ra-auth-cognito` provides a custom `<LoginPage>` component that you can pass to you `<Admin>` through the `loginPage` prop:
+
 ```jsx
 // in src/App.tsx
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
-import { CognitoAuthProvider } from 'ra-auth-cognito';
+import { CognitoAuthProvider, LoginPage } from 'ra-auth-cognito';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import dataProvider from './dataProvider';
 import posts from './posts';
@@ -47,6 +49,7 @@ const App = () => {
            authProvider={authProvider}
            dataProvider={dataProvider}
            title="Example Admin"
+           loginPage={LoginPage}
         >
             <Resource name="posts" {...posts} />
       </Admin>
@@ -54,6 +57,8 @@ const App = () => {
 };
 export default App;
 ```
+
+If you need to customize this login page, please refer to the [`<LoginForm>` component](#loginform) and [`useCognitoLogin` hook](#usecognitologin) documentation.
 
 ## Usage With AWS Hosted UI (OAuth)
 
@@ -95,6 +100,71 @@ To support react-admin [identity feature](https://marmelab.com/react-admin/AuthP
 ## Handling Permissions
 
 This `authProvider.getPermissions` method returns an array of [the groups assigned to the user](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html?icmpid=docs_cognito_console_help_panel).
+
+## `<LoginForm>`
+
+A component that renders a login form. It handles first login with temporary passwords. Use it if you just want to customize the login page design:
+
+```tsx
+import { Box, Card, CardContent, CardMedia, CssBaseline } from '@mui/material';
+import { LoginForm } from 'ra-auth-cognito';
+
+export const MyLoginPage = () => {
+    return (
+		<>
+			<CssBaseline />
+			<Box>
+                <Card>
+                    <CardMedia
+                        sx={{ height: 140 }}
+                        image="/login_background.jpg"
+                    />
+                    <CardContent>
+                        <LoginForm redirectTo="/" />
+                    </CardContent>
+				</Card>
+			</Box>
+		</>
+	);
+}
+```
+
+## `useCognitoLogin`
+
+This hook will handle the login process, detecting whether users must provide their new password when they logged in with a temporary one. This is useful when you want complete control on your login UI:
+
+```tsx
+import { Box, Card, CardContent, CardMedia, CssBaseline } from '@mui/material';
+import { useCognitoLogin } from 'ra-auth-cognito';
+import { LoginForm } from './LoginForm';
+import { PasswordSetupForm } from './PasswordSetupForm';
+
+export const MyLoginPage = () => {
+    const [submit, { isLoading, requireNewPassword }] = useCognitoLogin({
+        redirectTo: '/'
+    });
+
+    return (
+		<>
+			<CssBaseline />
+			<Box>
+                <Card>
+                    <CardMedia
+                        sx={{ height: 140 }}
+                        image="/login_background.jpg"
+                    />
+                    <CardContent>
+                        {requireNewPassword
+                            ? <PasswordSetupForm onSubmit={submit} />
+                            : <LoginForm onSubmit={submit} />
+                        }
+                    </CardContent>
+				</Card>
+			</Box>
+		</>
+	);
+}
+```
 
 ## Demo
 
