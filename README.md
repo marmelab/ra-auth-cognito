@@ -2,15 +2,19 @@
 
 An auth provider for [react-admin](https://github.com/marmelab/react-admin) which handles authentication with AWS [Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html).
 
+[![Documentation]][DocumentationLink] 
+[![Source Code]][SourceCodeLink] 
+
+[Documentation]: https://img.shields.io/badge/Documentation-green?style=for-the-badge
+[Source Code]: https://img.shields.io/badge/Source_Code-blue?style=for-the-badge
+
+[DocumentationLink]: ./packages/ra-auth-cognito/Readme.md 'Documentation'
+[SourceCodeLink]: https://github.com/marmelab/ra-auth-cognito/tree/main/packages/ra-auth-cognito 'Source Code'
+
 This repository contains:
 
 -   The actual `ra-auth-cognito` package
 -   A simple demo app you can run locally to try out `ra-auth-cognito` with your own UserPool.
-
-## The `ra-auth-cognito` package
-
--   Please have a look at the [DOCUMENTATION](./packages/ra-auth-cognito/Readme.md)
--   And also the [source code](https://github.com/marmelab/ra-auth-cognito/tree/main/src/packages/ra-auth-cognito)
 
 ## Simple Demo
 
