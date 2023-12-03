@@ -25,13 +25,13 @@ npm install --save ra-auth-cognito
 
 ## Usage With Username/Password Sign-in
 
-When not using the AWS hosted UI, users you create in AWS will receive an email with a temporary password. The first time they log in the application with this temporary password, they will have to enter the password they want to use. To handle this use case, `ra-auth-cognito` provides a custom `<LoginPage>` component that you can pass to you `<Admin>` through the `loginPage` prop:
+When not using the AWS hosted UI, users you create in AWS will receive an email with a temporary password. The first time they log in the application with this temporary password, they will have to enter the password they want to use. To handle this use case, `ra-auth-cognito` provides a custom `<Login>` component that you can pass to you `<Admin>` through the `loginPage` prop:
 
 ```jsx
 // in src/App.tsx
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
-import { CognitoAuthProvider, LoginPage } from 'ra-auth-cognito';
+import { CognitoAuthProvider, Login } from 'ra-auth-cognito';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import dataProvider from './dataProvider';
 import posts from './posts';
@@ -49,7 +49,7 @@ const App = () => {
            authProvider={authProvider}
            dataProvider={dataProvider}
            title="Example Admin"
-           loginPage={LoginPage}
+           loginPage={Login}
         >
             <Resource name="posts" {...posts} />
       </Admin>
