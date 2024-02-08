@@ -2,17 +2,43 @@ import { useCallback } from 'react';
 import { useLogin, useSafeSetState } from 'react-admin';
 import { useMutation, UseMutationResult } from 'react-query';
 import { ErrorRequireNewPassword } from './ErrorRequireNewPassword';
+import { ErrorMfaTotpRequired } from './ErrorMfaTotpRequired';
+import { ErrorMfaTotpAssociationRequired } from './ErrorMfaTotpAssociationRequired';
 
 export type LoginFormData = {
     username: string;
     password: string;
 };
 
-export type UseCognitoLoginResult<NewPasswordFormData = unknown> = [
-    (values: LoginFormData | NewPasswordFormData) => Promise<unknown>,
-    UseMutationResult<unknown, unknown, LoginFormData | NewPasswordFormData> & {
+export type NewPasswordFormData = {
+    newPassword: string;
+    confirmNewPassword: string;
+};
+
+export type TotpFormData = {
+    totp: string;
+};
+
+export type AssociationFormData = {
+    association: string;
+};
+
+export type FormData =
+    | LoginFormData
+    | NewPasswordFormData
+    | TotpFormData
+    | AssociationFormData;
+
+export type UseCognitoLoginResult = [
+    (values: FormData) => Promise<unknown>,
+    UseMutationResult<unknown, unknown, FormData> & {
         requireNewPassword: boolean;
-    }
+        requireMfaTotp: boolean;
+        requireMfaTotpAssociation: boolean;
+        secretCode: string;
+        username: string;
+        applicationName: string;
+    },
 ];
 
 /**
@@ -54,24 +80,45 @@ export type UseCognitoLoginResult<NewPasswordFormData = unknown> = [
  *     </Form>
  * }
  */
-export const useCognitoLogin = <NewPasswordFormData = unknown>({
+export const useCognitoLogin = ({
     redirectTo,
 }: {
-    redirectTo: string;
-}): UseCognitoLoginResult<NewPasswordFormData> => {
+    redirectTo?: string;
+}): UseCognitoLoginResult => {
     const login = useLogin();
     const [requireNewPassword, setRequireNewPassword] = useSafeSetState(false);
+    const [requireMfaTotp, setRequireMfaTotp] = useSafeSetState(false);
+    const [requireMfaTotpAssociation, setRequireMfaTotpAssociation] =
+        useSafeSetState(false);
+    const [secretCode, setSecretCode] = useSafeSetState('');
+    const [username, setUsername] = useSafeSetState('');
+    const [applicationName, setApplicationName] = useSafeSetState('');
 
-    const mutation = useMutation<
-        unknown,
-        unknown,
-        LoginFormData | NewPasswordFormData
-    >(values => login(values, redirectTo));
+    const mutation = useMutation<unknown, unknown, FormData>(values =>
+        login(values, redirectTo)
+    );
 
     const cognitoLogin = useCallback(
-        (values: LoginFormData | NewPasswordFormData) => {
+        (values: FormData) => {
             return mutation.mutateAsync(values).catch(error => {
+                if (error instanceof ErrorMfaTotpAssociationRequired) {
+                    setRequireMfaTotpAssociation(true);
+                    setRequireMfaTotp(false);
+                    setRequireNewPassword(false);
+                    setSecretCode(error.secretCode);
+                    setUsername(error.username);
+                    setApplicationName(error.applicationName);
+                    return;
+                }
+                if (error instanceof ErrorMfaTotpRequired) {
+                    setRequireMfaTotpAssociation(false);
+                    setRequireMfaTotp(true);
+                    setRequireNewPassword(false);
+                    return;
+                }
                 if (error instanceof ErrorRequireNewPassword) {
+                    setRequireMfaTotpAssociation(false);
+                    setRequireMfaTotp(false);
                     setRequireNewPassword(true);
                     return;
                 }
@@ -79,8 +126,43 @@ export const useCognitoLogin = <NewPasswordFormData = unknown>({
                 throw error;
             });
         },
-        [mutation, setRequireNewPassword]
+        [
+            mutation,
+            setRequireNewPassword,
+            setRequireMfaTotp,
+            setRequireMfaTotpAssociation,
+            setSecretCode,
+            setUsername,
+            setApplicationName,
+        ]
     );
 
-    return [cognitoLogin, { ...mutation, requireNewPassword }];
+    return [
+        cognitoLogin,
+        {
+            ...mutation,
+            requireNewPassword,
+            requireMfaTotp,
+            requireMfaTotpAssociation,
+            secretCode,
+            username,
+            applicationName,
+        },
+    ];
 };
+
+export const formIsNewPassword = (
+    form: FormData
+): form is NewPasswordFormData => 'newPassword' in form;
+
+export const formIsTotp = (form: FormData): form is TotpFormData =>
+    'totp' in form;
+
+export const formIsTotpAssociation = (
+    form: FormData
+): form is AssociationFormData => 'association' in form;
+
+export const formIsLogin = (form: FormData): form is LoginFormData =>
+    !formIsNewPassword(form) &&
+    !formIsTotp(form) &&
+    !formIsTotpAssociation(form);

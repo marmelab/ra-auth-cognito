@@ -1,4 +1,3 @@
-import { AuthProvider, HttpError } from 'react-admin';
 import {
     AuthenticationDetails,
     CognitoAccessToken,
@@ -8,7 +7,18 @@ import {
     CognitoUserPool,
     CognitoUserSession,
 } from 'amazon-cognito-identity-js';
+import { type AuthProvider, HttpError } from 'react-admin';
+import { ErrorMFARequired } from './ErrorMFARequired';
 import { ErrorRequireNewPassword } from './ErrorRequireNewPassword';
+import { ErrorMfaTotpRequired } from './ErrorMfaTotpRequired';
+import {
+    FormData,
+    formIsTotpAssociation,
+    formIsLogin,
+    formIsNewPassword,
+    formIsTotp,
+} from './useCognitoLogin';
+import { ErrorMfaTotpAssociationRequired } from './ErrorMfaTotpAssociationRequired';
 
 /**
  * An authProvider which handles authentication with AWS Cognito.
@@ -62,8 +72,13 @@ export type CognitoAuthProviderOptions =
     | CognitoAuthProviderOptionsPool
     | CognitoAuthProviderOptionsIds;
 
+export type Config = {
+    applicationName?: string;
+};
+
 export const CognitoAuthProvider = (
-    options: CognitoAuthProviderOptions
+    options: CognitoAuthProviderOptions,
+    config: Config = {}
 ): AuthProvider => {
     let user: CognitoUser | null = null;
     const mode = options instanceof CognitoUserPool ? 'username' : options.mode;
@@ -77,19 +92,10 @@ export const CognitoAuthProvider = (
               });
 
     return {
-        async login({
-            username,
-            password,
-            newPassword,
-            ...attributes
-        }: {
-            username: string;
-            password: string;
-            newPassword?: string;
-            [key: string]: any;
-        }) {
+        async login(form: FormData) {
             return new Promise((resolve, reject) => {
-                if (newPassword) {
+                if (formIsNewPassword(form)) {
+                    const { newPassword, ...attributes } = form;
                     if (!user) {
                         return reject(new Error('User is not defined'));
                     }
@@ -107,6 +113,46 @@ export const CognitoAuthProvider = (
                         }
                     );
                 }
+                if (formIsTotp(form)) {
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
+                    }
+                    return user.sendMFACode(
+                        form.totp,
+                        {
+                            onSuccess: result => {
+                                resolve(result);
+                            },
+                            onFailure: err => {
+                                reject(err);
+                            },
+                        },
+                        'SOFTWARE_TOKEN_MFA'
+                    );
+                }
+
+                if (formIsTotpAssociation(form)) {
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
+                    }
+                    return user.verifySoftwareToken(
+                        form.association,
+                        'Authenticator',
+                        {
+                            onSuccess: result => {
+                                resolve(result);
+                            },
+                            onFailure: err => {
+                                reject(err);
+                            },
+                        }
+                    );
+                }
+
+                if (!formIsLogin(form)) {
+                    return reject(new Error('Invalid form'));
+                }
+                const { username, password } = form;
 
                 user = new CognitoUser({
                     Username: username,
@@ -120,13 +166,37 @@ export const CognitoAuthProvider = (
 
                 user.authenticateUser(authenticationDetails, {
                     onSuccess: result => {
-                        resolve(result);
+                        return resolve(result);
                     },
                     onFailure: err => {
                         reject(err);
                     },
                     newPasswordRequired: () => {
                         reject(new ErrorRequireNewPassword());
+                    },
+                    mfaSetup: () => {
+                        user.associateSoftwareToken({
+                            associateSecretCode: secretCode => {
+                                reject(
+                                    new ErrorMfaTotpAssociationRequired({
+                                        secretCode,
+                                        username: user.getUsername(),
+                                        applicationName:
+                                            config.applicationName ??
+                                            window.location.hostname,
+                                    })
+                                );
+                            },
+                            onFailure: err => {
+                                reject(err);
+                            },
+                        });
+                    },
+                    totpRequired: () => {
+                        reject(new ErrorMfaTotpRequired());
+                    },
+                    mfaRequired: () => {
+                        reject(new ErrorMFARequired());
                     },
                 });
             });
@@ -154,7 +224,8 @@ export const CognitoAuthProvider = (
             return new Promise<void>((resolve, reject) => {
                 const redirectToOAuthIfNeeded = (error?: Error) => {
                     if (mode === 'oauth') {
-                        const oauthOptions = options as CognitoAuthProviderOptionsIds;
+                        const oauthOptions =
+                            options as CognitoAuthProviderOptionsIds;
                         const redirect_uri =
                             oauthOptions.redirect_uri ??
                             `${window.location.origin}/auth-callback`;
@@ -253,6 +324,7 @@ export const CognitoAuthProvider = (
                             avatar: attributes?.find(
                                 attribute => attribute.Name === 'picture'
                             )?.Value,
+                            cognitoUser: user, // Pass the cognito user object if you need to add authenticator or other features
                         });
                     });
                 });
@@ -260,7 +332,7 @@ export const CognitoAuthProvider = (
         },
         async handleCallback() {
             const urlParams = new URLSearchParams(
-                window.location.hash.substr(1)
+                window.location.hash.substring(1)
             );
             const error = urlParams.get('error');
             const errorDescription = urlParams.get('error_description');

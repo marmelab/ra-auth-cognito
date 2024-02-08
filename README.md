@@ -77,6 +77,23 @@ The first time you sign in with any of the users, you'll have to enter their tem
 
 Feel free to play around with this demo, along with the Cognito config, to understand better how it works!
 
+## Using the TOTP MFA
+
+For using the TOTP MFA, you will need to add translations for MFA pages. The library provides translations for English and French.
+
+## Customizing the application name using the TOTP MFA
+
+By default, the library uses the hostname to specify the hostname. If you want to specify it, pass to the authProvider a second argument with the `applicationName` in an object.
+
+```js
+authProvider(cognitoConfig, {
+    applicationName: "My Super App"
+});
+```
+
+
 ## License
 
 This repository and the code it contains are licensed under the MIT License and sponsored by [marmelab](https://marmelab.com).
+
+
