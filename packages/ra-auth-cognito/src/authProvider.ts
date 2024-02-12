@@ -6,6 +6,7 @@ import {
     CognitoUser,
     CognitoUserPool,
     CognitoUserSession,
+    IAuthenticationCallback,
 } from 'amazon-cognito-identity-js';
 import { type AuthProvider, HttpError } from 'react-admin';
 import { ErrorMFARequired } from './ErrorMFARequired';
@@ -94,77 +95,7 @@ export const CognitoAuthProvider = (
     return {
         async login(form: FormData) {
             return new Promise((resolve, reject) => {
-                if (formIsNewPassword(form)) {
-                    const { newPassword, ...attributes } = form;
-                    if (!user) {
-                        return reject(new Error('User is not defined'));
-                    }
-
-                    return user.completeNewPasswordChallenge(
-                        newPassword,
-                        attributes,
-                        {
-                            onSuccess: result => {
-                                resolve(result);
-                            },
-                            onFailure: err => {
-                                reject(err);
-                            },
-                        }
-                    );
-                }
-                if (formIsTotp(form)) {
-                    if (!user) {
-                        return reject(new Error('User is not defined'));
-                    }
-                    return user.sendMFACode(
-                        form.totp,
-                        {
-                            onSuccess: result => {
-                                resolve(result);
-                            },
-                            onFailure: err => {
-                                reject(err);
-                            },
-                        },
-                        'SOFTWARE_TOKEN_MFA'
-                    );
-                }
-
-                if (formIsTotpAssociation(form)) {
-                    if (!user) {
-                        return reject(new Error('User is not defined'));
-                    }
-                    return user.verifySoftwareToken(
-                        form.association,
-                        'Authenticator',
-                        {
-                            onSuccess: result => {
-                                resolve(result);
-                            },
-                            onFailure: err => {
-                                reject(err);
-                            },
-                        }
-                    );
-                }
-
-                if (!formIsLogin(form)) {
-                    return reject(new Error('Invalid form'));
-                }
-                const { username, password } = form;
-
-                user = new CognitoUser({
-                    Username: username,
-                    Pool: userPool,
-                });
-
-                const authenticationDetails = new AuthenticationDetails({
-                    Username: username,
-                    Password: password,
-                });
-
-                user.authenticateUser(authenticationDetails, {
+                const callback: IAuthenticationCallback = {
                     onSuccess: result => {
                         return resolve(result);
                     },
@@ -198,7 +129,58 @@ export const CognitoAuthProvider = (
                     mfaRequired: () => {
                         reject(new ErrorMFARequired());
                     },
+                };
+                if (formIsNewPassword(form)) {
+                    const { newPassword, confirmNewPassword, ...attributes } =
+                        form;
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
+                    }
+
+                    return user.completeNewPasswordChallenge(
+                        newPassword,
+                        attributes,
+                        callback
+                    );
+                }
+                if (formIsTotp(form)) {
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
+                    }
+                    return user.sendMFACode(
+                        form.totp,
+                        callback,
+                        'SOFTWARE_TOKEN_MFA'
+                    );
+                }
+
+                if (formIsTotpAssociation(form)) {
+                    if (!user) {
+                        return reject(new Error('User is not defined'));
+                    }
+                    return user.verifySoftwareToken(
+                        form.association,
+                        'Authenticator',
+                        callback
+                    );
+                }
+
+                if (!formIsLogin(form)) {
+                    return reject(new Error('Invalid form'));
+                }
+                const { username, password } = form;
+
+                user = new CognitoUser({
+                    Username: username,
+                    Pool: userPool,
                 });
+
+                const authenticationDetails = new AuthenticationDetails({
+                    Username: username,
+                    Password: password,
+                });
+
+                user.authenticateUser(authenticationDetails, callback);
             });
         },
         // called when the user clicks on the logout button

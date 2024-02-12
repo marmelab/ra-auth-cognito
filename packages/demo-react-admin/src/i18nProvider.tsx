@@ -15,7 +15,7 @@ const messages = {
         ]).then(([raMessages, raAuthCognitoMessages]) =>
             mergeTranslations(
                 raMessages.default,
-                raAuthCognitoMessages.raAuthCognitoLanguageFrench
+                raAuthCognitoMessages.raAuthCognitoFrenchMessages
             )
         ),
 };
@@ -27,7 +27,7 @@ export default polyglotI18nProvider(
         }
 
         // Always fallback on english
-        return englishMessages;
+        return allEnglishMessages;
     },
     'en',
     [
