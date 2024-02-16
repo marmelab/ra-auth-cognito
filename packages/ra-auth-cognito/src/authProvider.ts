@@ -264,7 +264,7 @@ export const CognitoAuthProvider = (
                 const user = userPool.getCurrentUser();
 
                 if (!user) {
-                    return reject();
+                    return resolve([]);
                 }
 
                 user.getSession((err, session: CognitoUserSession) => {
