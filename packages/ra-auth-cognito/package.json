@@ -17,7 +17,6 @@
     "peerDependencies": {
         "amazon-cognito-identity-js": "^6.1.2",
         "qrcode.react": "^3.1.0",
-        "ra-core": "^4.7.0",
         "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
         "react-admin": "^4.16.9",
         "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
