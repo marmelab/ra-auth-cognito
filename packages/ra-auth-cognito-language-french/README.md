@@ -16,7 +16,7 @@ yarn add ra-auth-cognito-language-french
 // in i18nProvider.js
 import { raAuthCognitoEnglishMessages } from 'ra-auth-cognito-language-english';
 import { raAuthCognitoFrenchMessages } from 'ra-auth-cognito-language-french';
-import { mergeTranslations } from 'ra-core';
+import { mergeTranslations } from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import englishMessages from 'ra-language-english';
 import frenchMessages from 'ra-language-french';
