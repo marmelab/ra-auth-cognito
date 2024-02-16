@@ -127,7 +127,7 @@ export const CognitoAuthProvider = (
                         reject(new ErrorMfaTotpRequired());
                     },
                     mfaRequired: () => {
-                        reject(new ErrorMFARequired());
+                        reject(new ErrorMFARequired('SMS MFA is required by the server, but it is not yet supported by ra-auth-cognito. Please disable this feature in Cognito config.'));
                     },
                 };
                 if (formIsNewPassword(form)) {
