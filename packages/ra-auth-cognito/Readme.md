@@ -10,8 +10,8 @@ This package provides:
 
 ## Supported Cognito Features
 
-- Username/password authentication
-- OAuth authentication with Implicit code grant
+-   Username/password authentication
+-   OAuth authentication with Implicit code grant
 
 In all cases, users must be added to the user pool with their email set before they may sign-in in react-admin.
 
@@ -44,16 +44,16 @@ const userPool = new CognitoUserPool({
 const authProvider = CognitoAuthProvider(userPool);
 
 const App = () => {
-  return (
-       <Admin
-           authProvider={authProvider}
-           dataProvider={dataProvider}
-           title="Example Admin"
-           loginPage={Login}
+    return (
+        <Admin
+            authProvider={authProvider}
+            dataProvider={dataProvider}
+            title="Example Admin"
+            loginPage={Login}
         >
             <Resource name="posts" {...posts} />
-      </Admin>
-   );
+        </Admin>
+    );
 };
 export default App;
 ```
@@ -75,20 +75,20 @@ const authProvider = CognitoAuthProvider({
     mode: 'oauth',
     clientId: 'COGNITO_APP_CLIENT_ID',
     userPoolId: 'COGNITO_USERPOOL_ID',
-    hostedUIUrl:  'YOUR AWS HOSTED UI URL',
+    hostedUIUrl: 'YOUR AWS HOSTED UI URL',
 });
 
 const App = () => {
-  return (
-       <Admin
-           authProvider={authProvider}
-           dataProvider={dataProvider}
-           title="Example Admin"
-           loginPage={false} // We don't need the login page in this case
+    return (
+        <Admin
+            authProvider={authProvider}
+            dataProvider={dataProvider}
+            title="Example Admin"
+            loginPage={false} // We don't need the login page in this case
         >
             <Resource name="posts" {...posts} />
-      </Admin>
-   );
+        </Admin>
+    );
 };
 export default App;
 ```
@@ -111,9 +111,9 @@ import { LoginForm } from 'ra-auth-cognito';
 
 export const MyLoginPage = () => {
     return (
-		<>
-			<CssBaseline />
-			<Box>
+        <>
+            <CssBaseline />
+            <Box>
                 <Card>
                     <CardMedia
                         sx={{ height: 140 }}
@@ -122,11 +122,11 @@ export const MyLoginPage = () => {
                     <CardContent>
                         <LoginForm redirectTo="/" />
                     </CardContent>
-				</Card>
-			</Box>
-		</>
-	);
-}
+                </Card>
+            </Box>
+        </>
+    );
+};
 ```
 
 ## `useCognitoLogin`
@@ -141,29 +141,44 @@ import { PasswordSetupForm } from './PasswordSetupForm';
 
 export const MyLoginPage = () => {
     const [submit, { isLoading, requireNewPassword }] = useCognitoLogin({
-        redirectTo: '/'
+        redirectTo: '/',
     });
 
     return (
-		<>
-			<CssBaseline />
-			<Box>
+        <>
+            <CssBaseline />
+            <Box>
                 <Card>
                     <CardMedia
                         sx={{ height: 140 }}
                         image="/login_background.jpg"
                     />
                     <CardContent>
-                        {requireNewPassword
-                            ? <PasswordSetupForm onSubmit={submit} />
-                            : <LoginForm onSubmit={submit} />
-                        }
+                        {requireNewPassword ? (
+                            <PasswordSetupForm onSubmit={submit} />
+                        ) : (
+                            <LoginForm onSubmit={submit} />
+                        )}
                     </CardContent>
-				</Card>
-			</Box>
-		</>
-	);
-}
+                </Card>
+            </Box>
+        </>
+    );
+};
+```
+
+## Using the TOTP MFA
+
+The library offers English and French translations for TOTP MFA pages. If you need other translations, have a look to the [ra-auth-cognito-language-french package](https://github.com/marmelab/ra-auth-cognito/tree/main/packages/ra-auth-cognito-language-french/).
+
+## Customizing the application name using the TOTP MFA
+
+By default, the library uses the `hostname` as the `applicationName`. If you want to define your own, add a second parameter to the `authProvider`, defining the `applicationName` you want:
+
+```js
+authProvider(cognitoConfig, {
+    applicationName: 'My Super App',
+});
 ```
 
 ## Demo

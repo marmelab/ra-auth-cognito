@@ -17,11 +17,17 @@ build-ra-auth-cognito:
 	@echo "Transpiling ra-auth-cognito files...";
 	@cd ./packages/ra-auth-cognito && yarn build
 
+build-ra-auth-cognito-languages:
+	@echo "Transpiling ra-auth-cognito-language-english files...";
+	@cd ./packages/ra-auth-cognito-language-english && yarn build
+	@echo "Transpiling ra-auth-cognito-language-french files...";
+	@cd ./packages/ra-auth-cognito-language-french && yarn build
+
 build-demo-react-admin:
 	@echo "Transpiling demo files...";
 	@cd ./packages/demo-react-admin && yarn build
 
-build: build-ra-auth-cognito build-demo-react-admin ## compile ES6 files to JS
+build: build-ra-auth-cognito build-ra-auth-cognito-languages build-demo-react-admin ## compile ES6 files to JS
 
 lint: ## lint the code and check coding conventions
 	@echo "Running linter..."
@@ -40,5 +46,7 @@ test-unit: ## launch unit tests
 start:
 	@cd ./packages/demo-react-admin && yarn start
 
-publish: ## Publish the package
+publish: ## Publish the packages
 	cd packages/ra-auth-cognito && npm publish
+	cd packages/ra-auth-cognito-language-english && npm publish
+	cd packages/ra-auth-cognito-language-french && npm publish
