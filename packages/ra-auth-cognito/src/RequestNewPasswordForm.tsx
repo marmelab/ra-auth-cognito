@@ -39,8 +39,10 @@ export const RequestNewPasswordForm = ({
         >
             <CardContent className={LoginFormClasses.content}>
                 <Typography>
-                    {translate('ra.auth.require_new_password', {
-                        _: 'Please enter a new password',
+                    {translate('ra.auth.cognito.require_new_password', {
+                        _: translate('ra.auth.require_new_password', {
+                            _: 'Please enter a new password',
+                        }),
                     })}
                 </Typography>
                 <TextInput

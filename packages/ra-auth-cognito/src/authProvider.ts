@@ -9,7 +9,7 @@ import {
     IAuthenticationCallback,
 } from 'amazon-cognito-identity-js';
 import { type AuthProvider, HttpError } from 'react-admin';
-import { ErrorMFARequired } from './ErrorMFARequired';
+import { ErrorMFASmsRequired } from './ErrorMFASmsRequired';
 import { ErrorRequireNewPassword } from './ErrorRequireNewPassword';
 import { ErrorMfaTotpRequired } from './ErrorMfaTotpRequired';
 import {
@@ -127,7 +127,11 @@ export const CognitoAuthProvider = (
                         reject(new ErrorMfaTotpRequired());
                     },
                     mfaRequired: () => {
-                        reject(new ErrorMFARequired('SMS MFA is required by the server, but it is not yet supported by ra-auth-cognito. Please disable this feature in Cognito config.'));
+                        reject(
+                            new ErrorMFASmsRequired(
+                                'SMS MFA is required by the server, but it is not yet supported by ra-auth-cognito. Please disable this feature in Cognito config.'
+                            )
+                        );
                     },
                 };
                 if (formIsNewPassword(form)) {

@@ -11,6 +11,7 @@ export type CognitoTranslationMessages = {
                         label: string;
                     };
                 };
+                require_new_password: string;
             };
         };
     };

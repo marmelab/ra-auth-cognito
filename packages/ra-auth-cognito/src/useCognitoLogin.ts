@@ -165,4 +165,6 @@ export const formIsTotpAssociation = (
 export const formIsLogin = (form: FormData): form is LoginFormData =>
     !formIsNewPassword(form) &&
     !formIsTotp(form) &&
-    !formIsTotpAssociation(form);
+    !formIsTotpAssociation(form) &&
+    'password' in form &&
+    'username' in form;

@@ -1,5 +1,5 @@
 export * from './ErrorMfaTotpAssociationRequired';
-export * from './ErrorMFARequired';
+export * from './ErrorMFASmsRequired';
 export * from './ErrorRequireNewPassword';
 export * from './ErrorMfaTotpRequired';
 export * from './Login';

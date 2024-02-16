@@ -79,11 +79,11 @@ Feel free to play around with this demo, along with the Cognito config, to under
 
 ## Using the TOTP MFA
 
-For using the TOTP MFA, you will need to add translations for MFA pages. The library provides translations for English and French.
+The library offers English and French translations for TOTP MFA pages. If you need other translations, have a look to the [ra-auth-cognito-language-french package](packages/ra-auth-cognito-language-french/README.md).
 
 ## Customizing the application name using the TOTP MFA
 
-By default, the library uses the hostname to specify the hostname. If you want to specify it, pass to the authProvider a second argument with the `applicationName` in an object.
+By default, the library uses the `hostname` as the `applicationName`. If you want to define your own, add a second parameter to the `authProvider`, defining the `applicationName` you want:  
 
 ```js
 authProvider(cognitoConfig, {
