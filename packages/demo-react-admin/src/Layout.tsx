@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Layout } from 'react-admin';
 import { CssBaseline } from '@mui/material';
 

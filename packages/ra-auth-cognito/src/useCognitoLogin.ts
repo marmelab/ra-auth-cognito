@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useLogin, useSafeSetState } from 'react-admin';
-import { useMutation, UseMutationResult } from 'react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { ErrorRequireNewPassword } from './ErrorRequireNewPassword';
 import { ErrorMfaTotpRequired } from './ErrorMfaTotpRequired';
 import { ErrorMfaTotpAssociationRequired } from './ErrorMfaTotpAssociationRequired';
