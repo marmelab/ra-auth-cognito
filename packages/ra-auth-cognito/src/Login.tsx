@@ -22,7 +22,7 @@ export const LoginForm = (props: any) => {
     const [
         login,
         {
-            isLoading,
+            isPending: isLoading,
             requireNewPassword,
             requireMfaTotp,
             requireMfaTotpAssociation,

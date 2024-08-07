@@ -94,9 +94,9 @@ export const useCognitoLogin = ({
     const [username, setUsername] = useSafeSetState('');
     const [applicationName, setApplicationName] = useSafeSetState('');
 
-    const mutation = useMutation<unknown, unknown, FormData>(values =>
-        login(values, redirectTo)
-    );
+    const mutation = useMutation<unknown, unknown, FormData>({
+        mutationFn: values => login(values, redirectTo)
+    });
 
     const cognitoLogin = useCallback(
         (values: FormData) => {

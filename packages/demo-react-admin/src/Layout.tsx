@@ -10,7 +10,6 @@ export default props => (
         <Layout {...props} />
         <ReactQueryDevtools
             initialIsOpen={false}
-            toggleButtonProps={{ style: { width: 20, height: 30 } }}
         />
     </>
 );
