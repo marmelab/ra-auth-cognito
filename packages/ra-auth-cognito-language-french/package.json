@@ -1,6 +1,6 @@
 {
     "name": "ra-auth-cognito-language-french",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "repository": "git@github.com:marmelab/ra-auth-cognito.git",
     "author": "Guillaume Pierson <guillaumep@marmelab.com> (https://marmelab.com/)",
     "license": "MIT",
@@ -15,44 +15,18 @@
     "types": "esm/index.d.ts",
     "sideEffects": false,
     "peerDependencies": {
-        "ra-auth-cognito": "^1.1.0"
+        "ra-auth-cognito": "^2.0.0"
     },
     "scripts": {
         "build": "yarn run build-cjs && yarn run build-esm",
         "build-cjs": "rimraf ./lib && tsc",
         "build-esm": "rimraf ./esm && tsc --outDir esm --module es2015",
         "watch": "tsc --outDir esm --module es2015 --watch",
-        "lint": "eslint --fix ./src",
-        "test-unit": "jest"
+        "lint": "eslint --fix ./src"
     },
     "devDependencies": {
         "ra-auth-cognito": "workspace:^",
         "rimraf": "^5.0.5",
-        "typescript": "^5.3.3"
-    },
-    "jest": {
-        "preset": "ts-jest",
-        "testEnvironment": "jsdom",
-        "collectCoverageFrom": [
-            "**/*.js",
-            "**/*.ts",
-            "!__tests__/util.ts",
-            "!coverage/**",
-            "!**/node_modules/**"
-        ],
-        "verbose": true,
-        "automock": false,
-        "clearMocks": true,
-        "testPathIgnorePatterns": [
-            "/node_modules/"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
+        "typescript": "^5.5.4"
     }
 }
