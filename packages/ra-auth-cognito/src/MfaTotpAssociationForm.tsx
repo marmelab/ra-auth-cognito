@@ -54,7 +54,9 @@ export const MfaTotpAssociationForm = ({
                     <QRCodeSVG value={otpUrl} />
                     <Button
                         size="small"
-                        onClick={() => navigator.clipboard.writeText(secretCode)}
+                        onClick={() =>
+                            navigator.clipboard.writeText(secretCode)
+                        }
                         variant="text"
                     >
                         {translate(

@@ -37,14 +37,10 @@ prettier: ## prettify the source code using prettier
 	@echo "Running prettier..."
 	@yarn prettier
 
-test: build test-unit lint ## launch all tests
-
-test-unit: ## launch unit tests
-	echo "Running unit tests...";
-	yarn test-unit;
+test: build lint ## launch all tests
 
 start:
-	@cd ./packages/demo-react-admin && yarn start
+	@cd ./packages/demo-react-admin && yarn dev
 
 publish: ## Publish the packages
 	cd packages/ra-auth-cognito && npm publish

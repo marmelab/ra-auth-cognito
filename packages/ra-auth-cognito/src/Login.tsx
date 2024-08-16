@@ -22,7 +22,7 @@ export const LoginForm = (props: any) => {
     const [
         login,
         {
-            isLoading,
+            isPending,
             requireNewPassword,
             requireMfaTotp,
             requireMfaTotpAssociation,
@@ -62,7 +62,7 @@ export const LoginForm = (props: any) => {
             <RequestNewPasswordForm
                 submit={submit}
                 className={className}
-                isLoading={isLoading}
+                isLoading={isPending}
             />
         );
     }
@@ -72,7 +72,7 @@ export const LoginForm = (props: any) => {
             <MfaTotpForm
                 submit={submit}
                 className={className}
-                isLoading={isLoading}
+                isLoading={isPending}
             />
         );
     }
@@ -82,7 +82,7 @@ export const LoginForm = (props: any) => {
             <MfaTotpAssociationForm
                 submit={submit}
                 className={className}
-                isLoading={isLoading}
+                isLoading={isPending}
                 secretCode={secretCode}
                 username={username}
                 applicationName={applicationName}
@@ -93,7 +93,7 @@ export const LoginForm = (props: any) => {
     return (
         <UserPasswordForm
             submit={submit}
-            isLoading={isLoading}
+            isLoading={isPending}
             className={className}
         />
     );

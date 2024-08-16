@@ -1,4 +1,4 @@
-import { Button, Box, CardContent, CircularProgress } from '@mui/material';
+import { Button, CardContent, CircularProgress } from '@mui/material';
 import clsx from 'clsx';
 import * as React from 'react';
 import {

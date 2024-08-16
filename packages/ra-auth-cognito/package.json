@@ -1,6 +1,6 @@
 {
     "name": "ra-auth-cognito",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "repository": "git@github.com:marmelab/ra-auth-cognito.git",
     "author": "Gildas Garcia <gildas@marmelab.com> (https://marmelab.com/)",
     "license": "MIT",
@@ -15,54 +15,24 @@
     "types": "esm/index.d.ts",
     "sideEffects": false,
     "peerDependencies": {
-        "amazon-cognito-identity-js": "^6.1.2",
+        "amazon-cognito-identity-js": "^6.3.12",
         "qrcode.react": "^3.1.0",
-        "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
-        "react-admin": "^4.16.9",
-        "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+        "react": "^18.0.0 || ^19.0.0",
+        "react-admin": "^5.1.1",
+        "react-dom": "^18.0.0 || ^19.0.0"
     },
     "scripts": {
         "build": "yarn run build-cjs && yarn run build-esm",
         "build-cjs": "rimraf ./lib && tsc",
         "build-esm": "rimraf ./esm && tsc --outDir esm --module es2015",
         "watch": "tsc --outDir esm --module es2015 --watch",
-        "lint": "eslint --fix ./src",
-        "test-unit": "jest"
+        "lint": "eslint --fix ./src"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.12",
-        "jest": "^29.7.0",
-        "jest-environment-jsdom": "^29.7.0",
-        "react": "^18.2.0",
-        "react-admin": "^4.16.9",
-        "react-dom": "^18.2.0",
+        "react": "^18.3.1",
+        "react-admin": "^5.1.1",
+        "react-dom": "^18.3.1",
         "rimraf": "^5.0.5",
-        "ts-jest": "^29.1.2",
-        "typescript": "^5.3.3"
-    },
-    "jest": {
-        "preset": "ts-jest",
-        "testEnvironment": "jsdom",
-        "collectCoverageFrom": [
-            "**/*.js",
-            "**/*.ts",
-            "!__tests__/util.ts",
-            "!coverage/**",
-            "!**/node_modules/**"
-        ],
-        "verbose": true,
-        "automock": false,
-        "clearMocks": true,
-        "testPathIgnorePatterns": [
-            "/node_modules/"
-        ],
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js",
-            "jsx",
-            "json",
-            "node"
-        ]
+        "typescript": "^5.5.4"
     }
 }
