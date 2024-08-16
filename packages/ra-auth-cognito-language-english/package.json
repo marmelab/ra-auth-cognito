@@ -22,8 +22,7 @@
         "build-cjs": "rimraf ./lib && tsc",
         "build-esm": "rimraf ./esm && tsc --outDir esm --module es2015",
         "watch": "tsc --outDir esm --module es2015 --watch",
-        "lint": "eslint --fix ./src",
-        "test-unit": "jest"
+        "lint": "eslint --fix ./src"
     },
     "devDependencies": {
         "ra-auth-cognito": "workspace:^",
