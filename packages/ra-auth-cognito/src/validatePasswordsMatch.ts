@@ -15,14 +15,16 @@ import { Validator } from 'react-admin';
  *   </SimpleForm>
  * );
  */
-export const validatePasswordsMatch = (
-    field: string,
-    message = {
-        message: 'ra.validation.do_not_match',
-        args: { _: 'Passwords do not match' },
-    }
-): Validator => (value: string, allValues: any) => {
-    if (value !== allValues[field]) {
-        return message;
-    }
-};
+export const validatePasswordsMatch =
+    (
+        field: string,
+        message = {
+            message: 'ra.validation.do_not_match',
+            args: { _: 'Passwords do not match' },
+        }
+    ): Validator =>
+    (value: string, allValues: any) => {
+        if (value !== allValues[field]) {
+            return message;
+        }
+    };
