@@ -67,6 +67,7 @@ export type CognitoAuthProviderOptionsIds = {
     mode: 'oauth' | 'username';
     redirect_uri?: string;
     scope?: string[];
+    oauthGrantType?: 'code' | 'implicit';
 };
 
 export type CognitoAuthProviderOptions =
@@ -221,11 +222,15 @@ export const CognitoAuthProvider = (
                             'profile',
                             'aws.cognito.signin.user.admin',
                         ];
+                        const response_type =
+                            oauthOptions.oauthGrantType === 'code'
+                                ? 'code'
+                                : 'token';
                         const url = `${
                             oauthOptions.hostedUIUrl
                         }/login?client_id=${
                             oauthOptions.clientId
-                        }&response_type=token&scope=${scope.join(
+                        }&response_type=${response_type}&scope=${scope.join(
                             '+'
                         )}&redirect_uri=${redirect_uri}`;
                         window.location.href = url;
