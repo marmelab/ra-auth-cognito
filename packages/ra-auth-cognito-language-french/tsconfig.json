@@ -1,15 +1,14 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
     "allowJs": false
   },
   "exclude": [
     "node_modules",
-    "esm",
-    "lib",
+    "dist",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.spec.js"
