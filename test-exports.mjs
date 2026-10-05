@@ -1,5 +1,7 @@
 // Loads the built packages the way Node does, as ES modules and as CommonJS,
 // to catch imports that only bundlers resolve. Run it after `make build`.
+// Plain JavaScript on purpose: a TypeScript loader would change how Node
+// resolves and loads the packages.
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import * as React from 'react';

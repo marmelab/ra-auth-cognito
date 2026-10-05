@@ -23,8 +23,8 @@
         "build": "yarn workspaces run build",
         "build-demo": "cd packages/demo && yarn build",
         "run-demo": "cd packages/demo && yarn dev",
-        "lint": "eslint --fix --ext .js,.ts,.tsx \"./packages/**/src/**/*.{js,ts,tsx}\"",
-        "prettier": "prettier --write \"./packages/**/src/**/*.{js,ts,tsx}\""
+        "lint": "eslint --fix --ext .js,.ts,.tsx \"./packages/**/src/**/*.{js,ts,tsx}\" test-exports.mjs",
+        "prettier": "prettier --write \"./packages/**/src/**/*.{js,ts,tsx}\" test-exports.mjs"
     },
     "workspaces": [
         "packages/*"
