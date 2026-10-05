@@ -32,13 +32,13 @@
     "sideEffects": false,
     "peerDependencies": {
         "amazon-cognito-identity-js": "^6.3.12",
-        "qrcode.react": "^3.1.0",
+        "qrcode.react": "^3.2.0 || ^4.0.0",
         "react": "^18.0.0 || ^19.0.0",
         "react-admin": "^5.1.1",
         "react-dom": "^18.0.0 || ^19.0.0"
     },
     "scripts": {
-        "build": "zshy --silent",
+        "build": "zshy",
         "lint": "eslint --fix ./src"
     },
     "devDependencies": {
@@ -46,6 +46,6 @@
         "react-admin": "^5.1.1",
         "react-dom": "^18.3.1",
         "typescript": "^5.5.4",
-        "zshy": "^0.5.0"
+        "zshy": "^0.8.0"
     }
 }

@@ -1,6 +1,6 @@
 import { Box, Button, CardContent, CircularProgress } from '@mui/material';
 import clsx from 'clsx';
-import * as qrcodeReact from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 import * as React from 'react';
 import {
     Form,
@@ -11,13 +11,6 @@ import {
 } from 'react-admin';
 import type { SubmitHandler } from 'react-hook-form';
 import type { FormData } from './useCognitoLogin';
-
-// qrcode.react v3 is CommonJS only, and Node's ESM loader can't detect its
-// named exports: they are only reachable through the default export there.
-const { QRCodeSVG } =
-    'QRCodeSVG' in qrcodeReact
-        ? qrcodeReact
-        : (qrcodeReact as unknown as { default: typeof qrcodeReact }).default;
 
 export type MfaTotpAssociationFormProps = {
     className?: string;

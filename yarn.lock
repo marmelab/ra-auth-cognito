@@ -3629,7 +3629,7 @@ __metadata:
     amazon-cognito-identity-js: ^6.3.12
     jsonexport: ^3.2.0
     lodash: ^4.17.21
-    qrcode.react: ^3.1.0
+    qrcode.react: ^3.2.0
     ra-auth-cognito: "workspace:^"
     ra-auth-cognito-language-english: "workspace:^"
     ra-auth-cognito-language-french: "workspace:^"
@@ -6044,12 +6044,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode.react@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "qrcode.react@npm:3.1.0"
+"qrcode.react@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "qrcode.react@npm:3.2.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 94a2942ecf83f461d869adb20305ae663c6d1abe93ef2c72442b07d756ce70cf6deb6fd588dc5b382b48c6991cfde1dfd5ac9b814c1461e71d5edb2d945e67fc
+  checksum: 55d020ca482d57e8d73ee9e2e18f152184fd3d7d2d0742ae54ec58c5a3bab08b242a648585178d7fc91877fc75d6fbad7a35fb51bc4bddd4374e1de450ca78e7
   languageName: node
   linkType: hard
 
@@ -6078,7 +6078,7 @@ __metadata:
   dependencies:
     ra-auth-cognito: "workspace:^"
     typescript: ^5.5.4
-    zshy: ^0.5.0
+    zshy: ^0.8.0
   peerDependencies:
     ra-auth-cognito: ^2.0.0
   languageName: unknown
@@ -6090,7 +6090,7 @@ __metadata:
   dependencies:
     ra-auth-cognito: "workspace:^"
     typescript: ^5.5.4
-    zshy: ^0.5.0
+    zshy: ^0.8.0
   peerDependencies:
     ra-auth-cognito: ^2.0.0
   languageName: unknown
@@ -6125,10 +6125,10 @@ __metadata:
     react-admin: ^5.1.1
     react-dom: ^18.3.1
     typescript: ^5.5.4
-    zshy: ^0.5.0
+    zshy: ^0.8.0
   peerDependencies:
     amazon-cognito-identity-js: ^6.3.12
-    qrcode.react: ^3.1.0
+    qrcode.react: ^3.2.0 || ^4.0.0
     react: ^18.0.0 || ^19.0.0
     react-admin: ^5.1.1
     react-dom: ^18.0.0 || ^19.0.0
@@ -7524,9 +7524,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zshy@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "zshy@npm:0.5.0"
+"zshy@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "zshy@npm:0.8.0"
   dependencies:
     arg: ^5.0.2
     fast-glob: ^3.3.2
@@ -7535,6 +7535,6 @@ __metadata:
     typescript: ">5.5.0"
   bin:
     zshy: dist/index.cjs
-  checksum: 50c62403e3266333c8cd077cbcd919a715687e05295b63319b3e1b00bfff01f64b92a026a9d501f3918b83d97257c722c1f8267a6213190e5a7366f9e2b9cbeb
+  checksum: 7e092020fd56052805caa3d37d69462b614ba7b4ff8dbb6c7ebbda51ae9efc4e615f23c34092ce87394a4eec029560fd5f9a08ef48454f24e4fdbd94a3929d5d
   languageName: node
   linkType: hard
