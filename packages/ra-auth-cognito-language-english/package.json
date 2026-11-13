@@ -1,6 +1,6 @@
 {
     "name": "ra-auth-cognito-language-english",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "repository": "git@github.com:marmelab/ra-auth-cognito.git",
     "author": "Guillaume Pierson <guillaumep@marmelab.com> (https://marmelab.com/)",
     "license": "MIT",
