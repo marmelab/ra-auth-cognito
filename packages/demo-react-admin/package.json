@@ -17,7 +17,7 @@
         "amazon-cognito-identity-js": "^6.3.12",
         "jsonexport": "^3.2.0",
         "lodash": "^4.17.21",
-        "qrcode.react": "^3.1.0",
+        "qrcode.react": "^3.2.0",
         "ra-auth-cognito": "workspace:^",
         "ra-auth-cognito-language-english": "workspace:^",
         "ra-auth-cognito-language-french": "workspace:^",

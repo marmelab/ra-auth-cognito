@@ -37,7 +37,11 @@ prettier: ## prettify the source code using prettier
 	@echo "Running prettier..."
 	@yarn prettier
 
-test: build lint ## launch all tests
+test: build test-exports lint ## launch all tests
+
+test-exports: ## check that the built packages load in Node, as ES modules and as CommonJS
+	@echo "Running exports smoke test...";
+	@node ./test-exports.mjs
 
 start:
 	@cd ./packages/demo-react-admin && yarn dev
